@@ -4,24 +4,22 @@ namespace DrawingStuff
 {
     class TestWorld : IWorld
     {
-        const int numVisuals = 500;
+        const int numVisuals = 100000;
+
         public TestWorld()
         {
-          
             for ( int i = 0; i < numVisuals; i++ )
             {
                 Scene.AddVisual(VisualFactory.RandomVisual());
                 pos[i] = Vector2.Zero;
-                vel[i] = RandomUnitVector * Rand(0.1f);
+                vel[i] = RandomUnitVector * ( 0.1f +  Rand(0.1f));
                 angle[i] = Rand(2.0f * PI);
-                angleVel[i] = Rand(1.0f);
+                angleVel[i] = (0.5f + Rand(1.0f));
 
             }
         }
 
-
         public void HandleInput(Vector2 mouseWorldPos, float deltaTime, Camera camera) {   }
-
 
         public void Update(float deltaTime)
         {

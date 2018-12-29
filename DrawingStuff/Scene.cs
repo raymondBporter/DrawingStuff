@@ -13,9 +13,14 @@ namespace DrawingStuff
 
             foreach (var opaqueBatch in opaqueBatches)
             {
-                Batch.AddVisuals(opaqueBatch.ToList());
-                Batch.Draw(opaqueBatch.First().Material, camera.WorldToDevice);
-                Batch.Clear();
+                Batch.Begin(opaqueBatch.First().Material, camera.WorldToDevice);
+
+                foreach (Visual visual in opaqueBatch)
+                {
+                    Batch.AddGeom(visual.Geom, visual.ZCoord, visual.Transform, visual.UseTransform);
+                }
+
+                Batch.End();
             }
            
             var transparentVisuals = Visuals.Where(visual => visual.Material.BlendType == Material.BlendMode.Transparent).
@@ -23,22 +28,29 @@ namespace DrawingStuff
                                              ThenBy((visual) => visual.Material);
 
             Material currentMaterial = transparentVisuals.FirstOrDefault()?.Material;
+
+            if (currentMaterial == null)
+                return;
+
+            Batch.Begin(currentMaterial, camera.WorldToDevice);
+
             foreach (Visual transparentVisual in transparentVisuals)
             {
                 if (transparentVisual.Material != currentMaterial)
                 {
-                    Batch.Draw(currentMaterial, camera.WorldToDevice);
-                    Batch.Clear();
+                    Batch.End();
+                    Batch.Begin(currentMaterial, camera.WorldToDevice);
                 }
+
                 currentMaterial = transparentVisual.Material;
-                Batch.AddVisual(transparentVisual);
+                Batch.AddGeom(transparentVisual.Geom, transparentVisual.ZCoord, transparentVisual.Transform, transparentVisual.UseTransform);
             }
-            Batch.Draw(currentMaterial, camera.WorldToDevice);
-            Batch.Clear();           
+
+            Batch.End();
         }
 
         public void AddVisual(Visual visual) => Visuals.Add(visual);
-        Batch Batch = new Batch();
+        Batch Batch = new Batch(256000);
         public List<Visual> Visuals = new List<Visual>();
     }
 }

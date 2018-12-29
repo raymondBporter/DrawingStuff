@@ -1,5 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace DrawingStuff
 {
@@ -13,52 +15,40 @@ namespace DrawingStuff
             GlType = glType;
         }
 
-        public int Handle;
+        public int Handle { get; protected set;  }
         public GLType GlType;
-
+        static Thread MainThread = Thread.CurrentThread;
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
+        private bool Disposed = false; // To detect redundant calls
+        public void Dispose()
         {
-            if (!disposedValue)
+            if (!Disposed)
             {
-                if (disposing)
+                if (Thread.CurrentThread != MainThread)
+                    Debug.Assert(false, "wrong thread disposed gl resource");
+                switch (GlType)
                 {
-                    switch (GlType)
-                    {
-                        case GLType.Buffer:
-                            GL.DeleteBuffer(Handle);
-                            break;
-                        case GLType.Program:
-                            GL.DeleteProgram(Handle);
-                            break;
-                        case GLType.VertexArray:
-                            GL.DeleteVertexArray(Handle);
-                            break;
-                        case GLType.Texture:
-                            GL.DeleteTexture(Handle);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
+                    case GLType.Buffer:
+                        GL.DeleteBuffer(Handle);
+                        break;
+                    case GLType.Program:
+                        GL.DeleteProgram(Handle);
+                        break;
+                    case GLType.VertexArray:
+                        GL.DeleteVertexArray(Handle);
+                        break;
+                    case GLType.Texture:
+                        GL.DeleteTexture(Handle);
+                        break;
+                    default:
+                        throw new NotImplementedException();
 
-                disposedValue = true;
+                }
+                Disposed = true;
             }
         }
-
-         ~GLObject() => Dispose(false);
-         
-
-        // This code added to correctly implement the disposable pattern.
-        void IDisposable.Dispose()
-        {
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            GC.SuppressFinalize(this);
-        }
-        #endregion
+        #endregion IDisposable Support
     }
+    
 }

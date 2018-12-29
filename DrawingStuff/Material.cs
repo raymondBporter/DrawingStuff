@@ -41,7 +41,10 @@ namespace DrawingStuff
 
         public override bool Equals(object obj) => obj is Material material && material == this;
         public override int GetHashCode() => base.GetHashCode();
-        static public bool operator==(Material m1, Material m2) => m1.Texture == m2.Texture && m1.Primitive == m2.Primitive;
+        static public bool operator ==(Material m1, Material m2)
+        {
+            return m1?.Texture == m2?.Texture && m1?.Primitive == m2?.Primitive;
+        }
         static public bool operator!=(Material m1, Material m2) => !(m1 == m2);
 
         public Color4 Color;

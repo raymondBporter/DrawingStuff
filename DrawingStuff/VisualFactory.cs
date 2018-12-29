@@ -28,14 +28,14 @@ namespace DrawingStuff
 
             if (rand > 4.0f)
                 return RectVisual(new Rect(-0.2f, .2f, -0.2f, .2f), blackLineMaterial, randomZ);
-            else if ( rand > 3.0f )
+            else if ( rand > 2.4f )
                 return RectVisual(new Rect(-0.2f, .2f, -0.2f, .2f), tableMaterial, randomZ);
-            else if ( rand > 2.0f )
-                return CircleVisual(0.1f + Rand(0.1f), blueMaterial, randomZ);
-            else if ( rand > 1.0f )
+            else if ( rand > 0.3f )
+                return CircleVisual(0.1f + Rand(0.1f), blueLineMaterial, randomZ);
+            else if ( rand > 0.1f )
                 return CircleVisual(0.2f, greenMaterial, randomZ);
             else
-                return CircleVisual(0.1f + Rand(0.1f), blueLineMaterial, randomZ);
+                return CircleVisual(0.1f + Rand(0.1f), blueMaterial, randomZ - 0.4f);
     }
 
         const int numCircleVerts = 64;
