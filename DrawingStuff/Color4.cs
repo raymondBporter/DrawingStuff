@@ -7,10 +7,10 @@ namespace DrawingStuff
 	[StructLayout(LayoutKind.Sequential)]
 	public struct Color4 
 	{
-		public float R { get; set; }
-        public float G { get; set; }
-        public float B { get; set; }
-        public float A { get; set; }
+        public float R;
+        public float G;
+        public float B;
+        public float A;
 
         public static Color4 White => new Color4(1.0f, 1.0f, 1.0f);
         public static Color4 Black => new Color4(0.0f, 0.0f, 0.0f);
@@ -32,10 +32,10 @@ namespace DrawingStuff
 
         public void Clamp()
 		{
-            R = Clamper.Clamp(R, 0.0f, 1.0f);
-            G = Clamper.Clamp(G, 0.0f, 1.0f);
-            B = Clamper.Clamp(B, 0.0f, 1.0f);
-            A = Clamper.Clamp(A, 0.0f, 1.0f);
+            R = Clamp01(R);
+            G = Clamp01(G);
+            B = Clamp01(B);
+            A = Clamp01(A);
 		}
 
         public override bool Equals(object obj) => obj is Color4 c && this == c;

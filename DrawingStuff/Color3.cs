@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using static DrawingStuff.FloatMath;
 
 namespace DrawingStuff
@@ -20,9 +19,9 @@ namespace DrawingStuff
 
         public void Clamp()
         {
-            R = Clamper.Clamp(R, 0.0f, 1.0f);
-            G = Clamper.Clamp(G, 0.0f, 1.0f);
-            B = Clamper.Clamp(B, 0.0f, 1.0f);
+            R = Clamp01(R);
+            G = Clamp01(G);
+            B = Clamp01(B);
         }
 
         public override bool Equals(object obj) => obj is Color3 c && this == c;

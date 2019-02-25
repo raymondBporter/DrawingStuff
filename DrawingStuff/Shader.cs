@@ -12,7 +12,7 @@ namespace DrawingStuff
             Debug.Assert(IsCompiled(), GetErrorText());
         }
 
-        void Compile() => GL.CompileShader(Handle);
+        private void Compile() => GL.CompileShader(Handle);
 
         public bool IsCompiled()
         {

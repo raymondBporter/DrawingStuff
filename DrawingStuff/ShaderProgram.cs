@@ -5,25 +5,26 @@ namespace DrawingStuff
 {
     public class ShaderProgram : GLObject
     {
-        public ShaderProgram(string vertexShaderFile, string fragmentShaderFile) : base(GL.CreateProgram(), GLType.Program)
+        public ShaderProgram(Shader vertexShader, Shader fragmentShader) : base(GL.CreateProgram(), GLType.Program)
         {
-            VertexShader = ResourceManager.GetVertexShader(vertexShaderFile);
-            FragmentShader = ResourceManager.GetFragmentShader(fragmentShaderFile);
+            VertexShader = vertexShader;
+            FragmentShader = fragmentShader;
             GL.AttachShader(Handle, VertexShader.Handle);
             GL.AttachShader(Handle, FragmentShader.Handle);
             GL.LinkProgram(Handle);
         }
 
-        public int GetUniformLocation(string name)
+        private int GetUniformLocation(string name)
         {
-            if (UniformLocations.TryGetValue(name, out int location))
-                return location;
-            int loc = GL.GetUniformLocation(Handle, name);
-            UniformLocations.Add(name, loc);
-            return loc;
+            if (!UniformLocations.TryGetValue(name, out int location))
+            {
+                location = GL.GetUniformLocation(Handle, name);
+                UniformLocations.Add(name, location);
+            }
+            return location;
         }
 
-        public void SetMatrix3(string name, Matrix3 matrix) => GL.UniformMatrix3(GetUniformLocation(name), 1, true, (float[])matrix);
+        public void SetMatrix3(string name, float[] matrix) => GL.UniformMatrix3(GetUniformLocation(name), 1, true, matrix);
         public void SetInt(string name, int value) => GL.Uniform1(GetUniformLocation(name), value);
 
         public void Begin() => GL.UseProgram(Handle);
@@ -32,5 +33,13 @@ namespace DrawingStuff
         protected Shader VertexShader;
         protected Shader FragmentShader;
         public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
+
+
+        public static ShaderProgram Colored = new ShaderProgram(
+                    ResourceManager.GetVertexShader(@"ColoredTransformed.vsh"),
+                    ResourceManager.GetFragmentShader(@"Colored.psh"));
+        public static ShaderProgram Textured = new ShaderProgram(
+                    ResourceManager.GetVertexShader(@"ColoredTexturedTransformed.vsh"),
+                    ResourceManager.GetFragmentShader(@"ColoredTextured.psh"));  
     }
 }

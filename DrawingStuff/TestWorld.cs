@@ -1,25 +1,39 @@
-﻿using static DrawingStuff.FloatMath;
+﻿using System.Collections.Generic;
+using static DrawingStuff.FloatMath;
 
 namespace DrawingStuff
 {
-    class TestWorld : IWorld
+    internal class TestWorld
     {
-        const int numVisuals = 100000;
+        private const int numVisuals = 10000;
+        List<Visual> Visuals = new List<Visual>(10000);
 
-        public TestWorld()
+
+        public TestWorld(Camera camera)
         {
+            Scene = new Scene(camera);
+
+
             for ( int i = 0; i < numVisuals; i++ )
             {
-                Scene.AddVisual(VisualFactory.RandomVisual());
-                pos[i] = Vector2.Zero;
-                vel[i] = RandomUnitVector * ( 0.1f +  Rand(0.1f));
+                Visuals.Add(VisualFactory.RandomVisual());
+                pos[i] = new Vector2(20.0f- Rand(40), 20.0f - Rand(40));
+                vel[i] = RandomUnitVector * Rand(3.0f);
                 angle[i] = Rand(2.0f * PI);
-                angleVel[i] = (0.5f + Rand(1.0f));
+                angleVel[i] = (1.5f + Rand(1.0f));
+            }
 
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visuals[i].WorldBoundingRect = Visuals[i].BoundingRect.Translated(Visuals[i].Transform.d);
+                Scene.Add(Visuals[i]);
             }
         }
 
-        public void HandleInput(Vector2 mouseWorldPos, float deltaTime, Camera camera) {   }
+        public void HandleInput(Vector2 mouseWorldPos, float deltaTime)
+        {
+
+        }
 
         public void Update(float deltaTime)
         {
@@ -27,20 +41,22 @@ namespace DrawingStuff
             {
                 pos[i] += vel[i] * deltaTime;
                 angle[i] += angleVel[i] * deltaTime;
-                Scene.Visuals[i].Transform = new XForm(angle[i], pos[i]);
+                Visuals[i].Transform = new XForm(angle[i], pos[i]);
+                Visuals[i].WorldBoundingRect = Visuals[i].BoundingRect.Translated(Visuals[i].Transform.d);
             }
         }
 
         public void Draw(Camera camera, float deltaTime)
         {
-            Scene.Draw(camera);
+            Scene.Draw();
         }
 
-        Vector2[] pos = new Vector2[numVisuals];
-        Vector2[] vel = new Vector2[numVisuals];
-        float[] angle = new float[numVisuals];
-        float[] angleVel = new float[numVisuals];
-        Scene Scene = new Scene();
+        private readonly Vector2[] pos = new Vector2[numVisuals];
+        private readonly Vector2[] vel = new Vector2[numVisuals];
+        private readonly float[] angle = new float[numVisuals];
+        private readonly float[] angleVel = new float[numVisuals];
+        private Scene Scene;
     }
+
 }
 

@@ -4,11 +4,11 @@ namespace DrawingStuff
 {
     public class VertexAttribute
     {
-        readonly int Index;
-        readonly int Size;
-        readonly int Stride;
-        readonly int Offset;
-        readonly VertexAttribPointerType AttributeType;
+        private readonly int Index;
+        private readonly int Size;
+        private readonly int Stride;
+        private readonly int Offset;
+        private readonly VertexAttribPointerType AttributeType;
 
         public VertexAttribute(int index, int size, VertexAttribPointerType attributeType, int stride, int offset)
         {

@@ -1,7 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using System.Diagnostics;
-using System.Threading;
+
 
 namespace DrawingStuff
 {
@@ -17,7 +16,6 @@ namespace DrawingStuff
 
         public int Handle { get; protected set;  }
         public GLType GlType;
-        static Thread MainThread = Thread.CurrentThread;
 
         #region IDisposable Support
         private bool Disposed = false; // To detect redundant calls
@@ -25,8 +23,6 @@ namespace DrawingStuff
         {
             if (!Disposed)
             {
-                if (Thread.CurrentThread != MainThread)
-                    Debug.Assert(false, "wrong thread disposed gl resource");
                 switch (GlType)
                 {
                     case GLType.Buffer:

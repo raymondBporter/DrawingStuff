@@ -32,7 +32,6 @@ namespace DrawingStuff
         public static Matrix3 RotationZ(float angle) =>
             new Matrix3(Cos(angle), -Sin(angle), 0.0f, Sin(angle), Cos(angle), 0.0f, 0.0f, 0.0f, 1.0f);
 
-
         public static Matrix3 Scale(float s) => new Matrix3(s, 0.0f, 0.0f, 0.0f, s, 0.0f, 0.0f, 0.0f, s);
         public static Matrix3 Scale(float sx, float sy, float sz) => new Matrix3(sx, 0.0f, 0.0f, 0.0f, sy, 0.0f, 0.0f, 0.0f, sz);
         public static Matrix3 Transpose(Matrix3 m) => new Matrix3(m.Col0, m.Col1, m.Col2);

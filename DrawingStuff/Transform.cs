@@ -7,6 +7,7 @@
 
         public static Vector2 operator * (Transform A, Vector2 x) => A.R * x + A.T;
         public static Transform operator * (Transform A, Transform B) => new Transform(A.R * B.R, A.R * B.T + A.T);
+        public Transform Inverse => new Transform(R.Inverse, R.Inverse * -T);
 
         public Vector2 T;
         public Rotation2 R;

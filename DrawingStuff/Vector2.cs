@@ -14,15 +14,28 @@ namespace DrawingStuff
 
         public static Vector2 FromAngle(float radians) => new Vector2(Cos(radians), Sin(radians));
         public static float Dot(Vector2 u, Vector2 v) => u.X * v.X + u.Y * v.Y;
+        public static float Cross(Vector2 u, Vector2 v) => u.X * v.Y - u.Y * v.X;
+
+        public static float Distance(Vector2 u, Vector2 v) => (u - v).Length;
+        
+
+        public static float DistanceSq(Vector2 u, Vector2 v) =>(u - v).LengthSq;
+        
+
         public float Length => Sqrt(X * X + Y * Y); 
         public float LengthSq => X * X + Y * Y;
         public Vector2 Normalized => (LengthSq < 1e-15f) ? Zero : this / Length;
         public void Normalize() => this = Normalized;
-        public void ClampLength(float maxLength) => this = Length > maxLength ? this / Length : this;
+        /// Clamp v to length len.
+        public Vector2 Clamped(float maxLen) => (Dot(this, this) > maxLen * maxLen) ? Normalized * maxLen : this;
+        
         public override bool Equals(object obj) => obj is Vector2 v && this == v;
         public override int GetHashCode() => HashCodeHelper.CombineHashCodes(X.GetHashCode(), Y.GetHashCode());
         public Vector2 PerpCCW => new Vector2(-Y, X);
-		public static Vector2 operator-(Vector2 v) => new Vector2(-v.X, -v.Y);
+        public static Vector2 Lerp(Vector2 v1, Vector2 v2, float t) => v1 * (1.0f - t) + v2 * t;
+ 
+
+        public static Vector2 operator-(Vector2 v) => new Vector2(-v.X, -v.Y);
         public static bool operator ==(Vector2 u, Vector2 v) => u.X == v.X && u.Y == v.Y;
         public static bool operator !=(Vector2 u, Vector2 v) => !(u == v);
         public static Vector2 operator +(Vector2 u, Vector2 v) => new Vector2(u.X + v.X, u.Y + v.Y);       

@@ -17,7 +17,7 @@
         public static XForm ReflectionX => new XForm(Matrix2.ReflectionX, Vector2.Zero);
         public static XForm ReflectionY => new XForm(Matrix2.ReflectionY, Vector2.Zero);
 
-        Matrix2 A;
-        Vector2 d;
+        public Matrix2 A;
+        public Vector2 d;
     }
 }

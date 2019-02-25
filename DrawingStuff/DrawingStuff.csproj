@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -38,6 +40,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,21 +55,37 @@
     <Compile Include="Batch.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CameraController.cs" />
+    <Compile Include="ClusterTestWorld.cs" />
     <Compile Include="Color3.cs" />
     <Compile Include="Color4.cs" />
     <Compile Include="FloatMath.cs" />
-    <Compile Include="Geom.cs" />
+    <Compile Include="IBroadphase.cs" />
+    <Compile Include="QuadTree.cs" />
+    <Compile Include="RenderDevice.cs" />
+    <Compile Include="SweepAndPrune.cs" />
+    <Compile Include="TexturePacker.cs" />
+    <Compile Include="TextureRectTest.cs" />
+    <Compile Include="Visual.cs" />
     <Compile Include="GLBuffer.cs" />
     <Compile Include="GLObject.cs" />
+    <Compile Include="GraphTestWorld.cs" />
     <Compile Include="HashCodeHelper.cs" />
-    <Compile Include="IWorld.cs" />
+    <Compile Include="ContactGroups.cs" />
+    <Compile Include="Intersect.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Matrix2.cs" />
     <Compile Include="Matrix3.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Physics\Arbiter.cs" />
+    <Compile Include="Physics\Body.cs" />
+    <Compile Include="Physics\Collision.cs" />
+    <Compile Include="Physics\Contact.cs" />
+    <Compile Include="Physics\Shape.cs" />
+    <Compile Include="Physics\Space.cs" />
+    <Compile Include="Physics\SpaceStep.cs" />
     <Compile Include="ProgramBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rect.cs" />
+    <Compile Include="Graph.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="Rotation2.cs" />
     <Compile Include="Scene.cs" />
@@ -74,10 +96,10 @@
     <Compile Include="Transform.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Vector3.cs" />
+    <Compile Include="VectorFunc.cs" />
     <Compile Include="VertexArray.cs" />
     <Compile Include="VertexAttribute.cs" />
     <Compile Include="VertexDeclaration.cs" />
-    <Compile Include="Visual.cs" />
     <Compile Include="VisualFactory.cs" />
     <Compile Include="XForm.cs" />
   </ItemGroup>
@@ -95,5 +117,6 @@
     <Content Include="Shaders\ColoredTransformed.vsh" />
     <Content Include="Textures\table.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
